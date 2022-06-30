@@ -7,7 +7,7 @@ export const Header = () => {
   const router = useRouter();
 
   return (
-    <Container flexDirection='row' width='full' maxWidth='3xl' py={3} mb={5}>
+    <Container flexDirection='row' width='full' maxWidth='3xl' py={5} mb={5}>
       <Button
         as={ChakraLink}
         variant='solid'
