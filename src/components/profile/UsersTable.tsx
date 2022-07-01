@@ -23,6 +23,8 @@ const arr = [
   },
 ];
 export const UsersTable = ({ values }) => {
+  console.log(values);
+
   return (
     <TableContainer height='80vh' mr={10}>
       <Table size='sm' variant='simple'>
@@ -40,7 +42,7 @@ export const UsersTable = ({ values }) => {
           </Tr>
         </Thead>
         <Tbody>
-          {arr?.map((item) => (
+          {values?.map((item) => (
             <Tr>
               <Td>{item?.email}</Td>
               <Td>{item?.password}</Td>
@@ -49,7 +51,7 @@ export const UsersTable = ({ values }) => {
               <Td>{item?.lastName}</Td>
               <Td>{item?.birthday}</Td>
               <Td>{item?.country}</Td>
-              <Td>{item?.language.toUpperCase()}</Td>
+              <Td>{item?.language?.toUpperCase()}</Td>
             </Tr>
           ))}
         </Tbody>

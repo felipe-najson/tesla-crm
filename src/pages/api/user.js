@@ -1,6 +1,29 @@
 import { MongoClient } from 'mongodb';
 
 async function handler(req, res) {
+  if (req.method === 'GET') {
+    let client;
+
+    try {
+      client = await MongoClient.connect('mongodb://127.0.0.1:27017');
+    } catch (error) {
+      res.status(500).json({ message: 'Could not connect to database.' });
+      return;
+    }
+
+    const db = client.db();
+    let result;
+    try {
+      result = await db.collection('users').find().toArray();
+    } catch (error) {
+      client.close();
+      res.status(500).json({ message: 'Storing message failed!' });
+      return;
+    }
+    client.close();
+    res.status(200).json(result);
+  }
+
   if (req.method === 'POST') {
     const { email, password, username } = req.body;
 

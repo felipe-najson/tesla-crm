@@ -13,10 +13,9 @@ function VehicleTelemetry() {
   const [values, setValues] = useState([]);
 
   const getData = async () => {
-    const response = await fetch('/api/telemetry', {
+    const response = await fetch('/api/user', {
       method: 'GET',
     });
-    console.warn('response', response);
     const data = await response.json();
     setValues(data);
   };
