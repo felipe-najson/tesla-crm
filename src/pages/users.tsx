@@ -29,7 +29,7 @@ function VehicleTelemetry() {
           <UsersTable values={values} />
         </Box>
         <Box width='25%' textAlign={'center'}>
-          <ProfileForm />
+          <RegisterForm />
           <Button onClick={getData} variant='outline' width={'80%'} mt={5}>
             Retrive Data
           </Button>

@@ -2,7 +2,7 @@ import { Button, FormControl, FormLabel, Input, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 
 async function registerUser(info) {
-  const response = await fetch('/api/telemetry', {
+  const response = await fetch('/api/user', {
     method: 'POST',
     body: JSON.stringify(info),
     headers: {
@@ -29,6 +29,7 @@ export const RegisterForm = () => {
       await registerUser({
         email,
         password,
+        username,
       });
 
       setEmail('');
