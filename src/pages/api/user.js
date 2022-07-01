@@ -1,77 +1,54 @@
-let cassandra = require('cassandra-driver');
-import { v4 as uuidv4 } from 'uuid';
+import { MongoClient } from 'mongodb';
 
 async function handler(req, res) {
   if (req.method === 'POST') {
-    const { wave, temperature, vibration, pressure, voltage, speed, time } =
-      req.body;
+    const { email, name, message } = req.body;
 
-    let authProvider = new cassandra.auth.PlainTextAuthProvider(
-      'cassandra',
-      'cassandra'
-    );
-    let contactPoints = ['127.0.0.1:9042'];
-    let localDataCenter = 'datacenter1';
+    if (
+      !email ||
+      !email.includes('@') ||
+      !name ||
+      name.trim() === '' ||
+      !message ||
+      message.trim() === ''
+    ) {
+      res.status(422).json({ message: 'Invalid input.' });
+      return;
+    }
 
-    let client = new cassandra.Client({
-      contactPoints: contactPoints,
-      authProvider: authProvider,
-      localDataCenter: localDataCenter,
-      keyspace: 'tesla',
-    });
+    const newMessage = {
+      email,
+      name,
+      message,
+    };
 
-    const query =
-      'INSERT INTO tesla.telemetry (item_id, wave, temperature, vibration, pressure, voltage, speed, time) VALUES (?, ?, ?, ?, ?, ?, ?, ?);';
+    let client;
 
-    client
-      .execute(
-        query,
-        [
-          uuidv4(),
-          wave,
-          temperature,
-          vibration,
-          pressure,
-          voltage,
-          speed,
-          time,
-        ],
-        {
-          prepare: true,
-        }
-      )
-      .then((result) => {
-        console.log('Successfully inserted');
-      })
-      .catch((err) => {
-        console.log('ERROR', err);
-      });
+    try {
+      client = await MongoClient.connect(
+        'mongodb+srv://maximilian:2YkcXq43KyPk0vqp@cluster0.ntrwp.mongodb.net/my-site?retryWrites=true&w=majority'
+      );
+    } catch (error) {
+      res.status(500).json({ message: 'Could not connect to database.' });
+      return;
+    }
 
-    // Exit the program after all queries are complete
-    Promise.allSettled([query]).finally(() => client.shutdown());
-  }
+    const db = client.db();
 
-  if (req.method === 'GET') {
-    let authProvider = new cassandra.auth.PlainTextAuthProvider(
-      'cassandra',
-      'cassandra'
-    );
-    let contactPoints = ['127.0.0.1:9042'];
-    let localDataCenter = 'datacenter1';
+    try {
+      const result = await db.collection('messages').insertOne(newMessage);
+      newMessage.id = result.insertedId;
+    } catch (error) {
+      client.close();
+      res.status(500).json({ message: 'Storing message failed!' });
+      return;
+    }
 
-    let client = new cassandra.Client({
-      contactPoints: contactPoints,
-      authProvider: authProvider,
-      localDataCenter: localDataCenter,
-      keyspace: 'tesla',
-    });
+    client.close();
 
-    const query = 'SELECT * FROM tesla.telemetry';
-    const result = await client.execute(query, [], { prepare: true });
-
-    Promise.allSettled([query]).finally(() => client.shutdown());
-
-    res.status(200).json(result.rows);
+    res
+      .status(201)
+      .json({ message: 'Successfully stored message!', message: newMessage });
   }
 }
 
