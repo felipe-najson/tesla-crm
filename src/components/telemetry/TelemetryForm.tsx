@@ -56,7 +56,7 @@ export const TelemetryForm = () => {
   return (
     <FormControl width={'80%'} margin='auto'>
       <Text fontSize='2xl' mb={6} textAlign='center'>
-        Agregue un nuevo item debajo
+        Add a New Item
       </Text>
       <FormLabel htmlFor='text'>Wave</FormLabel>
       <Input

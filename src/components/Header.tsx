@@ -28,9 +28,9 @@ export const Header = () => {
         flexGrow={1}
         mx={2}
         width='full'
-        onClick={() => router.push('/')}
+        onClick={() => router.push('/users')}
       >
-        Manufacturing Analysis
+        Users
       </Button>
       <Button
         as={ChakraLink}

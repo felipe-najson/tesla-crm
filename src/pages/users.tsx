@@ -5,6 +5,9 @@ import { Container } from '../components/Container';
 import { TelemetryForm } from '../components/telemetry/TelemetryForm';
 import { TelemetryTable } from '../components/telemetry/TelemetryTable';
 import { useState } from 'react';
+import { UsersTable } from '../components/profile/UsersTable';
+import { RegisterForm } from '../components/profile/RegisterForm';
+import { ProfileForm } from '../components/profile/ProfileForm';
 
 function VehicleTelemetry() {
   const [values, setValues] = useState([]);
@@ -22,11 +25,11 @@ function VehicleTelemetry() {
     <Container width='full'>
       <Header />
       <Flex color='white' width={'95%'} mb={5}>
-        <Box width='70%'>
-          <TelemetryTable values={values} />
+        <Box width='75%'>
+          <UsersTable values={values} />
         </Box>
-        <Box width='30%' textAlign={'center'}>
-          <TelemetryForm />
+        <Box width='25%' textAlign={'center'}>
+          <ProfileForm />
           <Button onClick={getData} variant='outline' width={'80%'} mt={5}>
             Retrive Data
           </Button>
