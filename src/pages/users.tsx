@@ -2,11 +2,8 @@ import { Flex, Box, Button } from '@chakra-ui/react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Container } from '../components/Container';
-import { TelemetryForm } from '../components/telemetry/TelemetryForm';
-import { TelemetryTable } from '../components/telemetry/TelemetryTable';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UsersTable } from '../components/profile/UsersTable';
-import { RegisterForm } from '../components/profile/RegisterForm';
 import { ProfileForm } from '../components/profile/ProfileForm';
 
 function VehicleTelemetry() {
@@ -20,6 +17,10 @@ function VehicleTelemetry() {
     setValues(data);
   };
 
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <Container width='full'>
       <Header />
@@ -28,9 +29,9 @@ function VehicleTelemetry() {
           <UsersTable values={values} />
         </Box>
         <Box width='25%' textAlign={'center'}>
-          <RegisterForm />
+          <ProfileForm />
           <Button onClick={getData} variant='outline' width={'80%'} mt={5}>
-            Retrive Data
+            Fetch Data
           </Button>
         </Box>
       </Flex>

@@ -4,7 +4,7 @@ import { Footer } from '../components/Footer';
 import { Container } from '../components/Container';
 import { TelemetryForm } from '../components/telemetry/TelemetryForm';
 import { TelemetryTable } from '../components/telemetry/TelemetryTable';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function VehicleTelemetry() {
   const [values, setValues] = useState([]);
@@ -18,6 +18,10 @@ function VehicleTelemetry() {
     setValues(data);
   };
 
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <Container width='full'>
       <Header />
@@ -28,7 +32,7 @@ function VehicleTelemetry() {
         <Box width='30%' textAlign={'center'}>
           <TelemetryForm />
           <Button onClick={getData} variant='outline' width={'80%'} mt={5}>
-            Retrive Data
+            Fetch Data
           </Button>
         </Box>
       </Flex>

@@ -10,18 +10,6 @@ import {
   TableContainer,
 } from '@chakra-ui/react';
 
-const arr = [
-  {
-    email: 'jhondoe@mail.com',
-    password: '*******',
-    username: 'jhonDoe23',
-    name: 'John',
-    lastName: 'Doe',
-    birthday: '22/01/1999',
-    country: 'United States',
-    language: 'en',
-  },
-];
 export const UsersTable = ({ values }) => {
   console.log(values);
 
@@ -32,26 +20,26 @@ export const UsersTable = ({ values }) => {
         <Thead>
           <Tr>
             <Th>Email</Th>
-            <Th>Password</Th>
             <Th>Username</Th>
             <Th>Name</Th>
             <Th>Last Name</Th>
             <Th>Birthday</Th>
             <Th>Country</Th>
             <Th>Language</Th>
+            <Th>Password</Th>
           </Tr>
         </Thead>
         <Tbody>
           {values?.map((item) => (
             <Tr>
               <Td>{item?.email}</Td>
-              <Td>{item?.password}</Td>
               <Td>{item?.username}</Td>
               <Td>{item?.name}</Td>
               <Td>{item?.lastName}</Td>
               <Td>{item?.birthday}</Td>
               <Td>{item?.country}</Td>
               <Td>{item?.language?.toUpperCase()}</Td>
+              <Td>{item?.password}</Td>
             </Tr>
           ))}
         </Tbody>

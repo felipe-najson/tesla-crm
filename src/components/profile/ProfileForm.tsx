@@ -8,10 +8,10 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
-async function fillProfileUser(info) {
-  const response = await fetch('/api/telemetry', {
+async function fillProfileUser(userData) {
+  const response = await fetch('/api/user', {
     method: 'POST',
-    body: JSON.stringify(info),
+    body: JSON.stringify(userData),
     headers: {
       'Content-Type': 'application/json',
     },
@@ -20,7 +20,7 @@ async function fillProfileUser(info) {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || 'Something went wrong!');
+    throw new Error(userData.message || 'Something went wrong!');
   }
 }
 export const ProfileForm = () => {
@@ -51,6 +51,12 @@ export const ProfileForm = () => {
       await fillProfileUser({
         email,
         password,
+        username,
+        name,
+        lastName,
+        birthday,
+        country,
+        language,
       });
 
       cleanForm();
@@ -101,7 +107,7 @@ export const ProfileForm = () => {
         onChange={(e) => setName(e.target.value)}
         mb={1}
       />
-      <FormLabel htmlFor='lastName'>LastName</FormLabel>
+      <FormLabel htmlFor='lastName'>Last Name</FormLabel>
       <Input
         id='lastName'
         type='text'
